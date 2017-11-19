@@ -1,4 +1,4 @@
-import sys, collections, random
+import collections, random
 
 class Affine:
     def __init__(self):
@@ -791,4 +791,85 @@ class Trifid:
         plain_text = ""
         for tri in data.split():
             plain_text += self.getletter(tri)
+        return plain_text
+
+class VIC:
+    board = []
+    alphabet = []
+    for x in range(65,91):
+        alphabet.append(chr(x))
+    alphabet.append(chr(46))
+    alphabet.append(chr(47))
+    blanks = ['20','60']
+    
+    def __init__(self, key="", alphabet=[], delimiter=' ', blanks=[]):
+        if len(blanks) > 0:
+            self.blanks = list(blanks)
+        self.delimiter = delimiter
+        if len(alphabet) > 0:
+            self.alphabet = list(alphabet)
+        if len(key) > 0:
+            self.keyalphabet(key)
+        else:
+            self.loadboard()
+
+    def loadboard(self):
+        for x in range(10):
+            column = []
+            for y in range(3):
+                pos = str(x) + str(y)
+                if pos in self.blanks:
+                    column.append(" ")
+                else:
+                    column.append(self.alphabet.pop(0))
+            self.board.append(column)
+
+    def keyalphabet(self, key):
+        for letter in key:
+            self.alphabet.append(self.alphabet.pop(self.alphabet.index(letter)))
+            self.alphabet.append(self.alphabet.pop(0))
+            self.alphabet.append(self.alphabet.pop(2))
+        self.loadboard()
+
+    def getposition(self, letter):
+        pos = ""
+        for c, column in enumerate(self.board):
+            if letter in column:
+                n = column.index(letter)
+                if n != 0:
+                    if n == 1:
+                        n = 2
+                    elif n == 2:
+                        n = 6
+                    pos += str(n) + str(c)
+                else:
+                    pos += str(c)
+        return pos
+
+    def getletter(self, pos):
+        if len(pos) == 1:
+            letter = self.board[int(pos)][0]
+        else:
+            if int(pos[0]) == 2:
+                row = 1
+            elif int(pos[0]) == 6:
+                row = 2
+            column = int(pos[1])
+            letter = self.board[column][row]
+        return letter
+
+    def encrypt(self, data):
+        cipher_text = ""
+        datalen = len(data)
+        for c, letter in enumerate(data):
+            cipher_text += self.getposition(letter)
+            if c != (len(data) - 1):
+                cipher_text += self.delimiter
+        return cipher_text
+
+    def decrypt(self, data):
+        plain_text = ""
+        for pos in data.split(self.delimiter):
+            if pos != self.delimiter:
+                plain_text += self.getletter(pos)
         return plain_text
