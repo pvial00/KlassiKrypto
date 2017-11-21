@@ -794,17 +794,15 @@ class Trifid:
         return plain_text
 
 class VIC:
-    board = []
-    alphabet = []
-    for x in range(65,91):
-        alphabet.append(chr(x))
-    alphabet.append(chr(46))
-    alphabet.append(chr(47))
-    blanks = ['20','60']
-    
     def __init__(self, key="", alphabet=[], delimiter=' ', blanks=[]):
-        if len(blanks) > 0:
-            self.blanks = list(blanks)
+        self.board = []
+        alphabet = []
+        for x in range(65,91):
+            alphabet.append(chr(x))
+        alphabet.append(chr(46))
+        alphabet.append(chr(47))
+        if len(blanks) == 0:
+            self.blanks = ['20','60']
         self.delimiter = delimiter
         if len(alphabet) > 0:
             self.alphabet = list(alphabet)
