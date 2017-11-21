@@ -83,8 +83,8 @@ p = cipher.decrypt(c)
 # VIC  
 from KlassiKrypto import VIC  
 cipher = VIC(key)  
-c = cipher.encrypt(msg)
-p = cipher.decrypt(c)
+c = cipher.encrypt(msg)  
+p = cipher.decrypt(c)  
 # Beale  
 from KlassiKrypto import Beale  
 cipher = Beale(book)  
