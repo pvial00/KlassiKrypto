@@ -4,7 +4,7 @@
 
 # Constants
 hostname="kryptomagik.com"
-ciphers=( "Atbash" "Affine" "Baconian" "BaconBits" "Polybius" "Bifid" "Trifid" "Caesar" "Beale" "Chaocipher" "Vigenere" "Nihilist" "VIC" )
+ciphers=( "Atbash" "Affine" "Baconian" "BaconBits" "Polybius" "Bifid" "Trifid" "Caesar" "Chaocipher" "Vigenere" "Nihilist" "VIC" )
 services=( "Random" )
 funcs=( "list" )
 cipher=$1
