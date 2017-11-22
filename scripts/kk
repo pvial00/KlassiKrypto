@@ -14,7 +14,7 @@ text=$3
 key=$4
 tmpfile="tmp.json"
 usage () {
-	echo "Usage: kk.sh <algorithm> <encrypt/decrypt> <text> <optional key>"
+	echo "Usage: kk <algorithm> <encrypt/decrypt> <text> <optional key>"
 }
 list () {
 	echo "Supported Ciphers"
