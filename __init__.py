@@ -147,7 +147,8 @@ class Chaocipher:
 
 class Vigenere:
     def __init__(self, key):
-        self.key = key
+        self.key = list(key)
+        self.keylen = len(key)
         self.alphabets = {}
         self.alphabets_rev = {}
         for z, x in enumerate(range(65,91)):
@@ -168,25 +169,10 @@ class Vigenere:
                 self.alphabets[chr(x)] = alphabet_dict
                 self.alphabets_rev[chr(x)] = alphabet_dict_rev
 
-    def expand_key(self, key, msglen):
-        expanded_key = []
-        key_copy = []
-        for x in range(0,len(key)):
-                expanded_key.append(key[x])
-                key_copy.append(key[x])
-        for x in range(0,msglen):
-                char = key_copy.pop(0)
-                key_copy.append(char)
-                expanded_key.append(char)
-        expanded_key.reverse()
-        return expanded_key
-
     def encrypt(self, secret):
         cipher_text = ""
-        key = self.expand_key(self.key, len(secret))
         for x in range(0,len(secret)):
-                keyi = key.pop()
-                key.insert(0,keyi)
+                keyi = self.key[ x % self.keylen]
                 sub_dict = self.alphabets[keyi]
                 sub = sub_dict[secret[x]]
                 cipher_text += sub
@@ -194,10 +180,8 @@ class Vigenere:
 
     def decrypt(self, secret):
         plain_text = ""
-        key = self.expand_key(self.key, len(secret))
         for x in range(0,len(secret)):
-                keyi = key.pop()
-                key.insert(0,keyi)
+                keyi = self.key[ x % self.keylen]
                 sub_dict = self.alphabets_rev[keyi]
                 sub = sub_dict[secret[x]]
                 plain_text += sub
@@ -336,7 +320,8 @@ class Caesar:
 
 class BitVigenere:
     def __init__(self, key):
-        self.key = key
+        self.key = list(key)
+        self.keylen = len(key)
         self.alphabets = {}
         self.alphabets_rev = {}
         for z, x in enumerate(range(256)):
@@ -357,25 +342,10 @@ class BitVigenere:
                 self.alphabets[x] = alphabet_dict
                 self.alphabets_rev[x] = alphabet_dict_rev
 
-    def expand_key(self, key, msglen):
-        expanded_key = []
-        key_copy = []
-        for x in range(0,len(key)):
-                expanded_key.append(key[x])
-                key_copy.append(key[x])
-        for x in range(0,msglen):
-                char = key_copy.pop(0)
-                key_copy.append(char)
-                expanded_key.append(char)
-        expanded_key.reverse()
-        return expanded_key
-
     def encrypt(self, secret):
         cipher_text = ""
-        key = self.expand_key(self.key, len(secret))
         for x in range(0,len(secret)):
-                keyi = key.pop()
-                key.insert(0,keyi)
+                keyi = self.key[ x % self.keylen]
                 sub_dict = self.alphabets[ord(keyi)]
                 sub = sub_dict[ord(secret[x])]
                 cipher_text += chr(sub)
@@ -383,10 +353,8 @@ class BitVigenere:
 
     def decrypt(self, secret):
         plain_text = ""
-        key = self.expand_key(self.key, len(secret))
         for x in range(0,len(secret)):
-                keyi = key.pop()
-                key.insert(0,keyi)
+                keyi = self.key[ x % self.keylen]
                 sub_dict = self.alphabets_rev[ord(keyi)]
                 sub = sub_dict[ord(secret[x])]
                 plain_text += chr(sub)
