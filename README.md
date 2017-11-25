@@ -1,5 +1,5 @@
 # KlassiKrypto - A collection of classical ciphers  
-Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC
+Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse
 
 # Usage:  
 msg = "HELLOWORLD"  
@@ -90,3 +90,8 @@ from KlassiKrypto import Beale
 cipher = Beale(book)  
 c = cipher.encrypt(msg)  
 p = cipher.decrypt(c)  
+# Morse  
+from KlassiKrypto import Morse  
+cipher = Morse()  
+c = cipher.encode(msg)  
+p = cipher.decode(c)  
