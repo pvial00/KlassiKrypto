@@ -1,7 +1,7 @@
-from KlassiKrypto import Atbash, Affine, Baconian, BaconBits, Polybius, Bifid, Trifid, Caesar, Beale, Chaocipher, Vigenere, Nihilist
+from KlassiKrypto import Atbash, Affine, Baconian, BaconBits, Polybius, Bifid, Trifid, Caesar, Beale, Chaocipher, Vigenere, Nihilist, Morse
 class Ciphers:
     ciphers = ['Atbash', 'Affine','Baconian','BaconBits','Polybius','Bifid', 'Trifid','Caesar','Beale', 'Chaocipher']
-    keyed_ciphers = ['Vigenere','Nihilist']
+    keyed_ciphers = ['Vigenere','Nihilist','Morse']
     ciphers.extend(keyed_ciphers)
 
     def __init__(self, cipher):
