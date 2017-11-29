@@ -1,5 +1,5 @@
 from KlassiKrypto.tools import Ciphers
-from KlassiKrypto import Atbash, Affine, Baconian, BaconBits, Polybius, Bifid, Trifid, Caesar, Beale, Chaocipher, Vigenere, Nihilist
+from KlassiKrypto import Atbash, Affine, Baconian, BaconBits, Polybius, Bifid, Trifid, Caesar, Beale, Chaocipher, Vigenere, Nihilist, ADFGX, ADFGVX
 import getpass, sys
 
 def usage():

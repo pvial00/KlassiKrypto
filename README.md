@@ -1,5 +1,5 @@
 # KlassiKrypto - A collection of classical ciphers  
-Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse
+Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse, ADFGX, ADFGVX
 
 # Usage:  
 msg = "HELLOWORLD"  
@@ -95,3 +95,14 @@ from KlassiKrypto import Morse
 cipher = Morse()  
 c = cipher.encode(msg)  
 p = cipher.decode(c)  
+# ADFGX  
+(Currently only supports blocks of 5 characters, input must be evenly divisble by 5)
+from KlassiKrypto import ADFGX  
+ADFGX().encrypt(data)  
+ADFGX().decrypt(data)  
+# ADFGVX  
+(Currently only supports blocks of 6 characters, input must be evenly divisble by 6)
+from KlassiKrypto import ADFGVX  
+ADFGVX().encrypt(data)  
+ADFGVX().decrypt(data)  
+

@@ -864,3 +864,173 @@ class Morse:
         for letter in data.split(delimiter):
             buf += self.alphabet[self.morse.index(letter)]
         return buf
+
+class ADFGX:
+    def __init__(self, name=[], alphabet=[]):
+        self.square = []
+        self.squarer = []
+        if len(name) == 0:
+            self.name = ['A','D','F','G','X']
+        else:
+            self.name = name
+        self.size = len(self.name)
+        self.dictionary = {}
+        self.dictionary_rev = {}
+        for c, letter in enumerate(self.name):
+            self.dictionary[letter] = c
+            self.dictionary_rev[c] = letter
+
+        if len(alphabet) == 0:
+            schar = 65
+            for x in range(26):
+                alphabet.append(chr(x + schar))
+        c = 0
+        for x in range(self.size):
+            row = {}
+            rrow = {}
+            for y in range(self.size):
+                row[y] = alphabet[c]
+                rrow[alphabet[c]] = y
+                c += 1
+            self.square.append(row)
+            self.squarer.append(rrow)
+
+    def getposition(self, letter):
+        p = ""
+        for c, row in enumerate(self.squarer):
+            if letter in row.keys():
+                p += self.dictionary_rev[c]
+                p += self.dictionary_rev[row[letter]]
+        return p
+
+    def getletter(self, pos):
+        r = self.dictionary[pos[0]]
+        l = self.dictionary[pos[1]]
+        row = self.square[r]
+        letter = row[l]
+        return letter
+
+    def stage2encrypt(self, stage1, key):
+        square = self.transenload(stage1)
+        seq = []
+        encryption_key = "".join(sorted(key))
+        for char in encryption_key:
+            seq.append(char)
+        for n in seq:
+            square.insert(0, square.pop(seq.index(n)))
+        cipher_text = ""
+        for col in square:
+            cipher_text += "".join(col)
+        return cipher_text
+    
+    def stage2decrypt(self, stage1, key):
+        square, extras = self.transdeload(stage1)
+        seq = []
+        encryption_key = "".join(sorted(key))
+        for char in encryption_key:
+            seq.append(char)
+        square.reverse()
+        for char in reversed(key):
+            seq.insert(0,seq.pop(seq.index(char)))
+            square.insert(0, square.pop(seq.index(char)))
+        for e in range(len(extras)):
+            square[e].append(extras.pop(0))
+        cipher_text = ""
+        for col in square:
+            for x in range(len(col)):
+                pos = col.pop(0)
+                cipher_text += pos + " "
+        return cipher_text
+
+    def transenload(self, data):
+        square = []
+        column_size = len(data) / self.size
+        extra = len(data) % self.size
+        c = 0
+        for x in range(self.size):
+            row = []
+            for y in range(column_size):
+                row.append(data[c])
+                c += 1
+            square.append(row)
+        last = data[(len(data) - 1) - extra:len(data) - 1]
+        extra_list = list(last)
+        for e in range(extra):
+            square[e].append(extra_list.pop(0))
+        return square
+
+    def transdeload(self, data):
+        square = []
+        column_size = (len(data) / 2) / self.size
+        extra = (len(data) / 2) % self.size
+        blocks = []
+        s = 0
+        e = 2
+        extras = []
+        extracount = 0
+        step = (self.size + extra) - 1
+        for x in range((len(data) / 2) ):
+            if extracount < extra:
+                if len(data) > self.size and len(data) < self.size * 2:
+                    if x % (self.size + extra) == 0:
+                        extras.append(data[s:e])
+                        extracount += 1
+                        s += 2
+                        e += 2
+                    else:
+                        blocks.append(data[s:e])
+                        s += 2
+                        e += 2
+                elif len(data) < self.size * 2:
+                    for x in range(extra):
+                        extras.append(data[s:e])
+                        s += 2
+                        e += 2
+            else:
+                blocks.append(data[s:e])
+                s += 2
+                e += 2
+        s = self.size
+        e = 2
+        s = s  - 1
+        extra_count = extra
+        for x in range(self.size):
+            row = []
+            for y in range(column_size):
+                row.append(blocks.pop(0))
+            square.append(row)
+        return square, extras
+
+    def stage1encrypt(self, data):
+        cipher_text = []
+        for c, letter in enumerate(data):
+            cipher_text.append(self.getposition(letter))
+        return cipher_text
+
+    def stage1decrypt(self, data):
+        plain_text = ""
+        for pos in data.split():
+            plain_text += self.getletter(pos)
+        return plain_text
+
+    def encrypt(self, data, key):
+        stage1 = self.stage1encrypt(data)
+        stage2 = self.stage2encrypt(stage1, key)
+        return stage2
+
+    def decrypt(self, data, key):
+        stage2 = self.stage2decrypt(data, key)
+        stage1 = self.stage1decrypt(stage2)
+        return stage1
+
+class ADFGVX(ADFGX):
+    def __init__(self, name=['A','D','F','G','V','X'], alphabet=[]):
+        if len(alphabet) == 0:
+            alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9']
+        self.cipher = ADFGX(name, alphabet)
+
+    def encrypt(self, data, key):
+        return self.cipher.encrypt(data, key)
+
+    def decrypt(self, data, key):
+        return self.cipher.decrypt(data, key)
