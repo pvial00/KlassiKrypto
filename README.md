@@ -1,5 +1,5 @@
 # KlassiKrypto - A collection of classical ciphers  
-Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse, ADFGX, ADFGVX
+Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse, ADFGX, ADFGVX, Enimga  
 
 # Usage:  
 msg = "HELLOWORLD"  
