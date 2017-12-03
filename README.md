@@ -105,4 +105,15 @@ ADFGX().decrypt(data)
 from KlassiKrypto import ADFGVX  
 ADFGVX().encrypt(data)  
 ADFGVX().decrypt(data)  
+# Enigma  
+(Currently only supports the 3 letter Grundstellung setting and plugboard settings.  Ringstellung is not currently supported)  
+from KlassiKrypto.enigma import Enigma  
+rotor1 = ["EKMFLGDQVZNTOWYHXUSPAIBRCJ","Q"]  
+rotor2 = ["AJDKSIRUXBLHWTMCQGZNPYFVOE", "E"]  
+rotor3 = ["BDFHJLCPRTXVZNYEIWGAKMUSQO", "V"]  
+reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT"  
+plugs = ['AC', 'BE']  
+settings = "AAA"  
 
+enigma = Enigma(rotor1, rotor2, rotor3, reflector)  
+enigma.input(msg, setting, plugs)  

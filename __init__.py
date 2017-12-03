@@ -511,6 +511,7 @@ class Polybius:
             for x in range(26):
                 alphabet.append(chr(x + schar))
         c = 0
+        schar = 65
         for x in range(1, size + 1):
             row = {}
             rrow = {}
