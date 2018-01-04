@@ -1035,3 +1035,43 @@ class ADFGVX(ADFGX):
 
     def decrypt(self, data, key):
         return self.cipher.decrypt(data, key)
+
+class BinaryAffine:
+    def __init__(self, a=1000039, ainv=87, b=8):
+        self.a = a
+        self.ainv = ainv
+        self.b = b
+
+    def encrypt(self, data):
+        cipher_text = []
+        for byte in data:
+            sub = ((ord(byte) * self.a) + self.b) % 256
+            cipher_text.append(chr(sub))
+        return "".join(cipher_text)
+
+    def decrypt(self, data):
+        plain_text = []
+        for byte in data:
+            sub = (self.ainv * (ord(byte) - self.b)) % 256
+            plain_text.append(chr(sub))
+        return "".join(plain_text)
+
+class AffineCounterMode:
+    def __init__(self, a=1000039, ainv=87, b=8):
+        self.a = a
+        self.ainv = ainv
+        self.b = b
+
+    def encrypt(self, data):
+        cipher_text = []
+        for c, byte in enumerate(data):
+            sub = (((ord(byte) * self.a) + c) + self.b) % 256
+            cipher_text.append(chr(sub))
+        return "".join(cipher_text)
+
+    def decrypt(self, data):
+        plain_text = []
+        for c, byte in enumerate(data):
+            sub = ((self.ainv * ((ord(byte) - c) - self.b))) % 256
+            plain_text.append(chr(sub))
+        return "".join(plain_text)

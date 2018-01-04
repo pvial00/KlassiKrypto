@@ -117,3 +117,9 @@ settings = "AAA"
 
 enigma = Enigma(rotor1, rotor2, rotor3, reflector)  
 enigma.input(msg, setting, plugs)  
+# BinaryAffine  
+BinaryAffine().encrypt(data)  
+BinaryAffine().decrypt(data)  
+# AffineCounterMode  
+AffineCounterMode().encrypt(data)  
+AffineCounterMode().decrypt(data)  
