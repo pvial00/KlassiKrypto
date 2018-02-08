@@ -1082,18 +1082,18 @@ class Beaufort:
         self.keylen = len(key)
         self.alphabets = {}
         self.alphabets_rev = {}
-        for z, x in enumerate(range(65,91)):
+        for z, x in enumerate(reversed(range(65,91))):
                 alphabet = collections.deque()
                 alphabet_dict = {}
                 alphabet_dict_rev = {}
-                for y in range(65,91):
+                for y in reversed(range(65,91)):
                         alphabet.append(chr(y))
                 if z == 0:
                         shift_factor = z
                 else:
                         shift_factor = z * -1
                 alphabet.rotate(shift_factor)
-                for y in range(65,91):
+                for y in reversed(range(65,91)):
                         letter = alphabet.popleft()
                         alphabet_dict[chr(y)] = letter
                         alphabet_dict_rev[letter] = chr(y)
@@ -1117,4 +1117,5 @@ class Beaufort:
                 sub_dict = self.alphabets_rev[keyi]
                 sub = sub_dict[secret[x]]
                 plain_text += sub
+        #return plain_text
         return Atbash().decrypt(plain_text)
