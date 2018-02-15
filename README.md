@@ -1,5 +1,5 @@
 # KlassiKrypto - A collection of classical ciphers  
-Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse, ADFGX, ADFGVX, Enimga, Beaufort
+Supported ciphers - Affine, Atbash, Baconian, BaconBits, Chaocipher, BitChao, BitchaoX, Vigenere, BitVigenere, Polybius, Bifid, Trifid, Nihilist, Caesar(rot), Beale, VIC, Morse, ADFGX, ADFGVX, Enimga, Beaufort, AutoKey (Vigenere, Beaufort)  
 
 # Usage:  
 msg = "HELLOWORLD"  
@@ -124,5 +124,8 @@ BinaryAffine().decrypt(data)
 AffineCounterMode().encrypt(data)  
 AffineCounterMode().decrypt(data)  
 # Beaufort  
-Beaufort().encrypt(data)  
-Beaufort().decrypt(data)  
+Beaufort(key).encrypt(data)  
+Beaufort(key).decrypt(data)  
+# AutoKey (Vigenere/Beaufort)  
+AutoKey(key).encrypt(data)  
+AutoKey(key).decrypt(data)  
