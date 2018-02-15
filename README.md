@@ -126,6 +126,9 @@ AffineCounterMode().decrypt(data)
 # Beaufort  
 Beaufort(key).encrypt(data)  
 Beaufort(key).decrypt(data)  
-# AutoKey (Vigenere/Beaufort)  
-AutoKey(key).encrypt(data)  
-AutoKey(key).decrypt(data)  
+# AutoKeyVigenere  
+AutoKeyVigenere(key).encrypt(data)  
+AutoKeyVigenere(key).decrypt(data)  
+# AutoKeyBeaufort  
+AutoKeyBeaufort(key).encrypt(data)  
+AutoKeyBeaufort(key).decrypt(data)  
