@@ -1,6 +1,6 @@
-from KlassiKrypto.tools import Ciphers
-from KlassiKrypto import Atbash, Affine, Baconian, BaconBits, Polybius, Bifid, Trifid, Caesar, Beale, Chaocipher, Vigenere, Nihilist, ADFGX, ADFGVX
+from KlassiKrypto import Atbash, Affine, Baconian, BaconBits, Polybius, Bifid, Trifid, Caesar, Beale, Chaocipher, Vigenere, Nihilist, ADFGX, ADFGVX, Morse
 import getpass, sys
+from tools import Ciphers
 
 def usage():
     sys.stdout.write("Usage: python kk.py <algorithm> <encrypt/decrypt> <optional key>\n")
@@ -20,13 +20,13 @@ if sys.argv[1] == "list":
 try:
     algorithm = sys.argv[1]
 except IndexError as ier:
-    print "Error: Did you forget encrypt/decrypt?"
+    print("Error: Did you forget encrypt/decrypt?")
     sys.exit(1)
 
 try:
     mode = sys.argv[2]
 except IndexError as ier:
-    print "Error: Did you forget encrypt/decrypt?"
+    print("Error: Did you forget encrypt/decrypt?")
     sys.exit(1)
 
 if algorithm in Ciphers(Atbash).keyed_ciphers:
@@ -44,11 +44,11 @@ except IndexError as ier:
 
 if mode == "encrypt":
     if data == "":
-        data = raw_input("Enter text to encrypt: ")
+        data = input("Enter text to encrypt: ")
     c = Ciphers(eval(algorithm)).encrypt(data, key)
     sys.stdout.write(c+"\n")
 elif mode == "decrypt":
     if data == "":
-        data = raw_input("Enter text to decrypt: ")
+        data = input("Enter text to decrypt: ")
     p = Ciphers(eval(algorithm)).decrypt(data, key)
     sys.stdout.write(p+"\n")

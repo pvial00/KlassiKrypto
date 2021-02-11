@@ -9,9 +9,9 @@ if select.select([sys.stdin,],[],[],0.0)[0]:
     data = sys.stdin.read()
     data = data[:len(data) - 1]
 else:
-    setting = raw_input("Enter setting: ")
-    plugs = raw_input("Enter plugs: ")
-    data = raw_input("Enter text: ")
+    setting = input("Enter setting: ")
+    plugs = input("Enter plugs: ")
+    data = input("Enter text: ")
 
 rotor1_set = ["EKMFLGDQVZNTOWYHXUSPAIBRCJ","Q"]
 rotor2_set = ["AJDKSIRUXBLHWTMCQGZNPYFVOE", "E"]

@@ -1,14 +1,16 @@
 import collections, random
 
-class Affine:
-    def __init__(self):
-        self.alphabet = {}
-        self.alphabet_rev = {}
-        for x in range(0,26):
-            self.alphabet[chr(x + 65)] = x
-            self.alphabet_rev[x] = chr(x + 65)
+''' KlassiKrypto [KryptoMagick 2021] '''
 
-    def encrypt(self, words):
+class Affine:
+   def __init__(self):
+      self.alphabet = {}
+      self.alphabet_rev = {}
+      for x in range(0,26):
+         self.alphabet[chr(x + 65)] = x
+         self.alphabet_rev[x] = chr(x + 65)
+
+   def encrypt(self, words):
         cipher_text = ""
         for letter in words:
             num = self.alphabet[letter]
@@ -17,7 +19,7 @@ class Affine:
             cipher_text += sub
         return cipher_text
 
-    def decrypt(self, words):
+   def decrypt(self, words):
         plain_text = ""
         for letter in words:
             num = self.alphabet[letter]
@@ -90,12 +92,14 @@ class Chaocipher:
     def __init__(self, left=[], right=[]):
         if len(left) == 0 and len(right) == 0:
             self.alpha_sub = ['H', 'X', 'U', 'C', 'Z', 'V', 'A', 'M', 'D', 'S', 'L', 'K', 'P', 'E', 'F', 'J', 'R', 'I', 'G', 'T', 'W', 'O', 'B', 'N', 'Y', 'Q']
-	    self.alpha_master = ['P', 'T', 'L', 'N', 'B', 'Q', 'D', 'E', 'O', 'Y', 'S', 'F', 'A', 'V', 'Z', 'K', 'G', 'J', 'R', 'I', 'H', 'W', 'X', 'U', 'M', 'C']
+            self.alpha_master = ['P', 'T', 'L', 'N', 'B', 'Q', 'D', 'E', 'O', 'Y', 'S', 'F', 'A', 'V', 'Z', 'K', 'G', 'J', 'R', 'I', 'H', 'W', 'X', 'U', 'M', 'C']
+            self.left = self.alpha_sub
+            self.right = self.alpha_master
         else:
             self.alpha_sub = left
             self.alpha_master = right
-        self.left = self.alpha_sub
-        self.right = self.alpha_master
+            self.left = self.alpha_sub
+            self.right = self.alpha_master
 
     def permute_alpha_sub(self, letter):
         while True:
@@ -196,7 +200,7 @@ class Beale:
         try:
             book_fd = open(book, "r")
         except IOError as ier:
-            print "Error: Unable to open book file"
+            print("Error: Unable to open book file")
             exit(1)
         text = book_fd.read()
         book_fd.close()
@@ -436,6 +440,12 @@ class Twist:
             plain_text += untwisted_block
         return plain_text
 
+    def encrypt(self, data):
+        return self.twist(data)
+
+    def decrypt(self, data):
+        return self.untwist(data)
+
 class BitChaoX:
     def __init__(self, key, nonce=""):
         self.key = key
@@ -667,7 +677,7 @@ class Bifid:
             row2.append(pos[1])
         initial = []
         initial2 = []
-        for x in range(len(data) / 2):
+        for x in range(int(len(data) / 2)):
             first = row1.pop(0)
             second = row1.pop(0)
             initial.append(first+second)
@@ -690,7 +700,7 @@ class Bifid:
         vallen = len(values)
         for r in range(2):
             row = []
-            for x in range(vallen / 2):
+            for x in range(int(vallen / 2)):
                 row.append(values.pop(0))
             rows.append(row)
         initial = []
@@ -851,7 +861,7 @@ class Morse:
     for x in range(48, 58):
         alphabet.append(chr(x))
 
-    def encode(self, data, delimiter=' '):
+    def encrypt(self, data, delimiter=' '):
         buf = ""
         datalen = len(data)
         for c, letter in enumerate(data):
@@ -860,20 +870,21 @@ class Morse:
                 buf += delimiter
         return buf
 
-    def decode(self, data, delimiter=' '):
+    def decrypt(self, data, delimiter=' '):
         buf = ""
         for letter in data.split(delimiter):
             buf += self.alphabet[self.morse.index(letter)]
         return buf
 
 class ADFGX:
-    def __init__(self, name=[], alphabet=[]):
+    def __init__(self, key, name=[], alphabet=[]):
         self.square = []
         self.squarer = []
         if len(name) == 0:
             self.name = ['A','D','F','G','X']
         else:
             self.name = name
+        self.key = key
         self.size = len(self.name)
         self.dictionary = {}
         self.dictionary_rev = {}
@@ -945,7 +956,7 @@ class ADFGX:
 
     def transenload(self, data):
         square = []
-        column_size = len(data) / self.size
+        column_size = int(len(data) / self.size)
         extra = len(data) % self.size
         c = 0
         for x in range(self.size):
@@ -1014,27 +1025,28 @@ class ADFGX:
             plain_text += self.getletter(pos)
         return plain_text
 
-    def encrypt(self, data, key):
+    def encrypt(self, data):
         stage1 = self.stage1encrypt(data)
-        stage2 = self.stage2encrypt(stage1, key)
+        stage2 = self.stage2encrypt(stage1, self.key)
         return stage2
 
-    def decrypt(self, data, key):
-        stage2 = self.stage2decrypt(data, key)
+    def decrypt(self, data):
+        stage2 = self.stage2decrypt(data, self.key)
         stage1 = self.stage1decrypt(stage2)
         return stage1
 
 class ADFGVX(ADFGX):
-    def __init__(self, name=['A','D','F','G','V','X'], alphabet=[]):
+    def __init__(self, key, name=['A','D','F','G','V','X'], alphabet=[]):
         if len(alphabet) == 0:
             alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9']
         self.cipher = ADFGX(name, alphabet)
+        self.key = key
 
-    def encrypt(self, data, key):
-        return self.cipher.encrypt(data, key)
+    def encrypt(self, data):
+        return self.cipher.encrypt(data, self.key)
 
     def decrypt(self, data, key):
-        return self.cipher.decrypt(data, key)
+        return self.cipher.decrypt(data, self.key)
 
 class BinaryAffine:
     def __init__(self, a=1000039, ainv=87, b=8):

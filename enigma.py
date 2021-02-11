@@ -1,3 +1,5 @@
+''' Enigma Machine [KryptoMagick] '''
+
 def genalphabet(alphabet):
     a = []
     for letter in alphabet:
